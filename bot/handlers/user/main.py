@@ -1,7 +1,7 @@
 import os
 import random
 
-from aiogram import Bot, Dispatcher
+from aiogram import Bot, Dispatcher, types
 from aiogram.types import Message
 
 
@@ -26,7 +26,12 @@ async def __help(msg: Message) -> None:
     """
     bot: Bot = msg.bot
     user_id = msg.from_user.id
-    photo = open('catpics/halp.jpg', 'rb')
+    markup = types.ReplyKeyboardMarkup()
+    heart_button = types.KeyboardButton('💖')
+    catpic_button = types.KeyboardButton('/catpic')
+    help_button = types.KeyboardButton('/help')
+    markup.add(catpic_button, help_button, heart_button)
+    photo = open('bot/catpics/halp.jpg', 'rb')
     await bot.send_message(msg.chat.id, 'I\'ll help you, what do you want?', reply_markup=markup)
     await bot.send_message(msg.chat.id, 'Command List:\n /catpic - send random picture of a cat\n /hi - say "hi"\n *any heart emoji* - send this if you love me\n')
     await bot.send_photo(msg.chat.id, photo)
@@ -66,7 +71,7 @@ async def __react_on_photo(msg: Message):
     bot: Bot = msg.bot
     user_id = msg.from_user.id
     await bot.send_message(msg.chat.id, 'Cool! Here\'s mine \U0001F63C')
-    photo = open('catpics/Kitty.jpg', 'rb')
+    photo = open('bot/catpics/Kitty.jpg', 'rb')
     await bot.send_photo(msg.chat.id, photo)
 
 
