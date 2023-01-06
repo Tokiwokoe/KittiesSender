@@ -16,7 +16,6 @@ async def __say_hi(msg: Message) -> None:
     This handler will be called when user sends `/start` or `/hi` command
     """
     bot: Bot = msg.bot
-    user_id = msg.from_user.id
     markup = get_main_keyboard()
     await bot.send_message(msg.chat.id, f'(=^_^=)/ ~~  <i>Hii, {msg.from_user.first_name}</i>',
                            parse_mode='html', reply_markup=markup)
@@ -27,7 +26,6 @@ async def __help(msg: Message) -> None:
     This handler will call command list when user sends `/help` command
     """
     bot: Bot = msg.bot
-    user_id = msg.from_user.id
     photo = open('bot/catpics/halp.jpg', 'rb')
     markup = get_main_keyboard()
     await bot.send_message(msg.chat.id, 'I\'ll help you, what do you want?', reply_markup=markup)
@@ -40,7 +38,6 @@ async def __send_catpic(msg: Message):
     Sends random picture of a cat when user sends `/catpic` or `/cat` command
     """
     bot: Bot = msg.bot
-    user_id = msg.from_user.id
     try:
         img_list = os.listdir('bot/catpics/')
         img_path = f'bot/catpics/{random.choice(img_list)}'
@@ -55,7 +52,6 @@ async def __react_on_heart(msg: Message):
     Answers on text with hearth emoji
     """
     bot: Bot = msg.bot
-    user_id = msg.from_user.id
     if msg.text in love_emoji:
         await bot.send_message(msg.chat.id, 'Ooh~ I love you too, my darling \U0001F63D')
     else:
@@ -67,7 +63,6 @@ async def __react_on_photo(msg: Message):
     Answers on photo
     """
     bot: Bot = msg.bot
-    user_id = msg.from_user.id
     await bot.send_message(msg.chat.id, 'Cool! Here\'s mine \U0001F63C')
     photo = open('bot/catpics/Kitty.jpg', 'rb')
     await bot.send_photo(msg.chat.id, photo)
