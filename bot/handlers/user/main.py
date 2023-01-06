@@ -3,6 +3,7 @@ import random
 
 from aiogram import Bot, Dispatcher, types
 from aiogram.types import Message
+from bot.keyboards import get_main_keyboard
 
 
 love_emoji = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍', '🤎', '❤️‍🔥',
@@ -16,8 +17,9 @@ async def __say_hi(msg: Message) -> None:
     """
     bot: Bot = msg.bot
     user_id = msg.from_user.id
+    markup = get_main_keyboard()
     await bot.send_message(msg.chat.id, f'(=^_^=)/ ~~  <i>Hii, {msg.from_user.first_name}</i>',
-                           parse_mode='html')
+                           parse_mode='html', reply_markup=markup)
 
 
 async def __help(msg: Message) -> None:
@@ -26,12 +28,8 @@ async def __help(msg: Message) -> None:
     """
     bot: Bot = msg.bot
     user_id = msg.from_user.id
-    markup = types.ReplyKeyboardMarkup()
-    heart_button = types.KeyboardButton('💖')
-    catpic_button = types.KeyboardButton('/catpic')
-    help_button = types.KeyboardButton('/help')
-    markup.add(catpic_button, help_button, heart_button)
     photo = open('bot/catpics/halp.jpg', 'rb')
+    markup = get_main_keyboard()
     await bot.send_message(msg.chat.id, 'I\'ll help you, what do you want?', reply_markup=markup)
     await bot.send_message(msg.chat.id, 'Command List:\n /catpic - send random picture of a cat\n /hi - say "hi"\n *any heart emoji* - send this if you love me\n')
     await bot.send_photo(msg.chat.id, photo)
