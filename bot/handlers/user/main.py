@@ -48,6 +48,7 @@ async def __send_catpic(msg: Message) -> None:
             random_image = random.choice(files)
             image_link = dbx.sharing_create_shared_link(random_image.path_display).url
             await bot.send_photo(msg.chat.id, image_link)
+            print(files)
         else:
             await msg.reply('I do not have any pics right now \U0001F63F')
     except Exception as e:

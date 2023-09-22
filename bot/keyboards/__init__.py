@@ -1,1 +1,1 @@
-from .main import get_main_keyboard
+from .main import get_main_keyboard, send_picture_to_database_confirmation_keyboard
