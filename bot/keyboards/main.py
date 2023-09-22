@@ -1,10 +1,30 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 
 
 def get_main_keyboard() -> ReplyKeyboardMarkup:
     markup = ReplyKeyboardMarkup()
-    heart_button = KeyboardButton('💖')
-    catpic_button = KeyboardButton('/catpic')
-    help_button = KeyboardButton('/help')
-    markup.add(catpic_button, help_button, heart_button)
+    markup.add(
+        KeyboardButton('💖'),
+        KeyboardButton('/catpic'),
+        KeyboardButton('/help')
+    )
+    return markup
+
+
+def send_picture_to_database_confirmation_keyboard() -> InlineKeyboardMarkup:
+    markup = InlineKeyboardMarkup(1)
+    markup.add(
+        InlineKeyboardButton('✅', callback_data='OKButton'),
+        InlineKeyboardButton('❌', callback_data='CancelButton'),
+    )
+    return markup
+
+
+def admin_send_picture_to_database_confirmation_keyboard() -> InlineKeyboardMarkup:
+    markup = InlineKeyboardMarkup(1)
+    markup.add(
+        InlineKeyboardButton('✅', callback_data='OKButton'),
+        InlineKeyboardButton('❌', callback_data='CancelButton'),
+        InlineKeyboardButton('BAN', callback_data='BAN'),
+    )
     return markup
