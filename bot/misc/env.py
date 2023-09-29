@@ -8,3 +8,4 @@ class EnvironmentVariables:
     DROPBOX_KEY: Final = environ.get('DROPBOX_KEY')
     BOT_TOKEN: Final = environ.get('BOT_TOKEN')
     FOLDER_PATH: Final = environ.get('FOLDER_PATH')
+    ADMIN_CHAT_ID: Final = environ.get('ADMIN_CHAT_ID')

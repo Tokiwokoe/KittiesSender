@@ -48,7 +48,6 @@ async def __send_catpic(msg: Message) -> None:
             random_image = random.choice(files)
             image_link = dbx.sharing_create_shared_link(random_image.path_display).url
             await bot.send_photo(msg.chat.id, image_link)
-            print(files)
         else:
             await msg.reply('I do not have any pics right now \U0001F63F')
     except Exception as e:
@@ -86,7 +85,7 @@ async def __add_to_database_callback(call: CallbackQuery) -> None:
 
     if call.data == 'OKButton':
         previous_message_id = call.message.message_id - 1
-        await bot.forward_message(6264984720, from_chat_id=call.message.chat.id, message_id=previous_message_id)
+        await bot.forward_message(EnvironmentVariables.ADMIN_CHAT_ID, from_chat_id=call.message.chat.id, message_id=previous_message_id)
         await call.message.answer('I\'ll add your picture after passing the moderation \U0001F63C')
     elif call.data == 'CancelButton':
         await call.message.answer('Ok, honey. I won\'t add it')
