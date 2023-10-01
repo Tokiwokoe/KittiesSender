@@ -38,8 +38,10 @@ async def __send_catpic(msg: Message) -> None:
     Sends random picture of a cat when user sends `/catpic` command
     """
     bot: Bot = msg.bot
-    dbx = dropbox.Dropbox(EnvironmentVariables.DROPBOX_KEY)
-
+    dbx = dropbox.Dropbox(app_key=EnvironmentVariables.APP_KEY,
+                          app_secret=EnvironmentVariables.APP_SECRET,
+                          oauth2_refresh_token=EnvironmentVariables.REFRESH_TOKEN)
+    wait_warning = await bot.send_message(chat_id=msg.chat.id, text='Wait a little bit, please')
     try:
         folder_path = '/KittiesSender'
         files = dbx.files_list_folder(folder_path).entries
@@ -52,6 +54,7 @@ async def __send_catpic(msg: Message) -> None:
             await msg.reply('I do not have any pics right now \U0001F63F')
     except Exception as e:
         await bot.send_message(msg.chat.id, f'Something went wrong :(')
+    await bot.delete_message(chat_id=msg.chat.id, message_id=wait_warning.message_id)
 
 
 async def __react_on_heart(msg: Message) -> None:
@@ -85,17 +88,12 @@ async def __add_to_database_callback(call: CallbackQuery) -> None:
 
     if call.data == 'OKButton':
         previous_message_id = call.message.message_id - 1
-        await bot.forward_message(EnvironmentVariables.ADMIN_CHAT_ID, from_chat_id=call.message.chat.id, message_id=previous_message_id)
+        await bot.forward_message(chat_id=EnvironmentVariables.ADMIN_CHAT_ID,
+                                  from_chat_id=call.message.chat.id,
+                                  message_id=previous_message_id)
         await call.message.answer('I\'ll add your picture after passing the moderation \U0001F63C')
     elif call.data == 'CancelButton':
         await call.message.answer('Ok, honey. I won\'t add it')
-
-
-async def __confirm_users_picture_sending(msg: Message) -> None:
-    """
-    Confirm adding picture by admin
-    """
-    pass
 
 
 def register_users_handlers(dp: Dispatcher) -> None:
@@ -107,5 +105,4 @@ def register_users_handlers(dp: Dispatcher) -> None:
     dp.register_message_handler(__send_catpic, commands=['catpic'])
     dp.register_message_handler(__react_on_heart, content_types=['text'])
     dp.register_message_handler(__react_on_photo, content_types=['photo'])
-    dp.register_message_handler(__confirm_users_picture_sending, )
     dp.register_callback_query_handler(__add_to_database_callback)
