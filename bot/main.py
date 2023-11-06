@@ -13,5 +13,4 @@ def start_bot():
 
     bot = Bot(token=EnvironmentVariables.BOT_TOKEN)
     dp = Dispatcher(bot)
-
     executor.start_polling(dp, skip_updates=True, on_startup=__on_start_up)

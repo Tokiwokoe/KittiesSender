@@ -6,7 +6,8 @@ def get_main_keyboard() -> ReplyKeyboardMarkup:
     markup.add(
         KeyboardButton('💖'),
         KeyboardButton('/catpic'),
-        KeyboardButton('/help')
+        KeyboardButton('/help'),
+        KeyboardButton('/subscribe')
     )
     return markup
 
