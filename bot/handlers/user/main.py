@@ -4,7 +4,6 @@ from aiogram import Bot, Dispatcher
 from aiogram.types import Message, CallbackQuery
 from bot.keyboards import get_main_keyboard, send_picture_to_database_confirmation_keyboard
 from bot.misc import EnvironmentVariables
-from bot.tasks import send_catpic_task
 
 
 love_emoji = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍', '🤎', '❤️‍🔥',
@@ -67,7 +66,6 @@ async def __subscribe_to_catpics(msg: Message):
             redis_client.srem('subscribers', chat_id)
         else:
             redis_client.sadd('subscribers', chat_id)
-            send_catpic_task.delay()
             await bot.send_message(chat_id, 'You are my subscriber now')
     except Exception as e:
         print(e)
