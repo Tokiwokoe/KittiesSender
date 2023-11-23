@@ -14,5 +14,5 @@ def start_bot():
 
     bot = Bot(token=EnvironmentVariables.BOT_TOKEN)
     dp = Dispatcher(bot)
-    send_catpic_task.delay()
+    #send_catpic_task.delay()
     executor.start_polling(dp, skip_updates=True, on_startup=__on_start_up)
