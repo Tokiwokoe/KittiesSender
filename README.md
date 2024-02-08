@@ -1,7 +1,7 @@
 # KittiesSender - Telegram Bot
 Telegram bot that sends pictures of cats and can add user's picture into database
 
-Python, Aiogram, Dropbox
+Python, Aiogram, Dropbox, Celery, Redis, RabbitMQ
 
 # Quickstart
 ### Cloning repository
