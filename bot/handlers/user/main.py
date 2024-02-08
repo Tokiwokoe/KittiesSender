@@ -4,7 +4,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.types import Message, CallbackQuery
 from bot.keyboards import get_main_keyboard, send_picture_to_database_confirmation_keyboard
 from bot.misc import EnvironmentVariables
-
+from bot.misc.dropbox import connect_to_dropbox, show_all_pictures
 
 love_emoji = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍', '🤎', '❤️‍🔥',
               '❣️', '💕', '💞', '💓', '💗', '💖', '💘', '💝', '😍', '🥰',
@@ -41,8 +41,10 @@ async def __send_catpic(msg: Message) -> None:
     """
     bot: Bot = msg.bot
     wait_warning = await bot.send_message(chat_id=msg.chat.id, text='Wait a little bit, please')
+    dbx = connect_to_dropbox()
+    files = show_all_pictures(dbx)
     try:
-        image_link = dropbox.find_random_picture()
+        image_link = dropbox.find_random_picture(files, dbx)
         if image_link:
             await bot.send_photo(msg.chat.id, image_link)
         else:
